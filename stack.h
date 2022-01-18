@@ -17,4 +17,5 @@ int isFull(Stack* stack);
 void push(Stack* stack, int item);
 int pop(Stack* stack);
 int peek(Stack* stack);
+void memcleanStack(Stack* stack); 
 #endif

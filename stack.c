@@ -24,6 +24,12 @@ Stack* createStack(int size){
     stack->top = MIN_TOP;
     stack->size = size;
     stack->items = (int*)calloc(stack->size, sizeof(int));
+
+    if (stack->items == NULL) {
+        printf("Failed to create stack. Mem Alloc Failed");
+        exit(EXIT_FAILURE);
+    }
+
     return stack;
 }
 
@@ -63,4 +69,16 @@ int isEmpty(Stack* stack) {
 
 int isFull(Stack* stack){
     return stack->top == (stack->size - 1);
+}
+
+void memcleanStack(Stack* stack) {
+    
+    if (stack != NULL) {
+        free(stack->items);
+        stack->items = NULL;
+        stack->size = MIN_SIZE;
+        free(stack);
+        stack = NULL;
+    }
+    
 }
