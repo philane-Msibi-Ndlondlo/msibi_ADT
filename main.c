@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 #include "linked_list.h"
+#include "map.h"
 
 int main(int argc, const char *argv[]) {
     
@@ -32,9 +33,20 @@ int main(int argc, const char *argv[]) {
     removeNodeFromLinkedList(list, 5);
     
     addNodeToLinkedList(list, 50);
-    
+    addNodeToLinkedList(list, 5);
+
     printLinkedList(list);
 
     memcleanLinkedList(list);
-    return 0;
+
+    Map* map = createMap();
+    addItem(map, "score1",54);
+    addItem(map, "score2",14);
+    addItem(map, "score3",44);
+    addItem(map, "score4",52);
+
+    printMap(map);
+    printf("%d is the value of key %s", getItem(map, "score2"), "score2");
+    memcleanMap(map);
+    return EXIT_SUCCESS;
 }

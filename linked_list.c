@@ -32,6 +32,12 @@ void addNodeToLinkedList(LinkedList* list, int data) {
     }
 
     Node* node = (Node*)malloc(sizeof(Node));
+
+    if (node == NULL) {
+        printf("Failed to add node. List is NULL\n");
+        exit(EXIT_FAILURE);
+    }
+
     node->data = data;
     node->next = NULL;
 
@@ -45,7 +51,6 @@ void addNodeToLinkedList(LinkedList* list, int data) {
     }
 
     node = NULL;
-
     list->size++;
 }
 
@@ -106,6 +111,7 @@ void removeNodeFromLinkedList(LinkedList* list, int data) {
 
     list->curr = list->head;
 
+
     while (list->curr->next != NULL && list->curr->data != data) {
         list->prev = list->curr;
         list->curr = list->curr->next;
@@ -116,25 +122,48 @@ void removeNodeFromLinkedList(LinkedList* list, int data) {
         return;
     }
 
-    list->curr = list->curr->next;
+    if (list->head == list->curr) {
+        list->prev = list->curr; 
+        list->head = list->curr->next;
+        free(list->prev);
+    } else {
+        list->curr = list->curr->next;
+        free(list->prev->next);
+        list->prev->next = list->curr;
+    }
 
-    free(list->prev->next);
-    list->prev->next = list->curr;
+    list->prev = NULL;
+    list->curr = NULL;
+    
+    list->size--;
     printf("Item removed from LinkedList");
+}
+
+void memcleanNodes(LinkedList* list) {
+    
+    if (list != NULL ) {
+
+        list->curr = list->head; 
+
+        while(list->curr->next != NULL) {
+            list->prev = list->curr;
+            list->curr = list->curr->next;
+            free(list->prev);
+        }
+
+        free(list->curr);
+    }
 }
 
 void memcleanLinkedList(LinkedList* list) {
     
     if (list != NULL ) {
-        free(list->head);
-        free(list->prev);
-        free(list->curr);
-        
+
+        memcleanNodes(list); 
         list->head = NULL;
         list->curr = NULL;
         list->prev = NULL;
         list->size = 0;
         free(list);
     }
-    
 }

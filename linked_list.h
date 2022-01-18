@@ -24,4 +24,7 @@ void printLinkedList(LinkedList* list);
 void removeNodeFromLinkedList(LinkedList* list, int data);
 
 void memcleanLinkedList(LinkedList* list);
+
+void memcleanNodes(LinkedList* list);
+
 #endif
